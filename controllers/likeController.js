@@ -1,7 +1,7 @@
 const Post = require("../models/postModel");
 const Like = require("../models/likeModel");
 
-exports.createLike = async (req, res) => {
+exports.likePost = async (req, res) => {
     try{
         const {post, user} = req.body;
         const like = new Like({

@@ -23,3 +23,19 @@ exports.likePost = async (req, res) => {
         })
     }
 }
+
+exports.unlikePost = async (req, res) => {
+    try {
+        const {post, like} = req.body;
+        const deletedLike = await Like.findOneAndDelete({post:post, _id:like}); // can be done with only like id also, jsut for example
+        
+        const updatedPost = await Post.findByIdAndUpdate(post, {$pull: {likes: deletedLike._id}}, {new: true});
+        res.json({
+            post: updatedPost
+        })
+    } catch(err) {
+        res.status(500).json({
+            error: "error while unliking the post"
+        })
+    }
+}
